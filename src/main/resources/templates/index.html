@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href='https://fonts.google.com/share?selection.family=Montserrat:ital,wght@0,100..900;1,100..900' rel='stylesheet'>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <title>Calculadora de notas - UFAPE</title>
+</head>
+<body>
+
+    <div class="navbar d-flex justify-content-center" style="background-color: #026302;">
+        <h1 class="h1 my-2 ms-2" style="color: white; font-family:'Montserrat';">
+            Calculadora de notas</h1>
+    </div>
+
+    <!--Formulario para inserção de notas-->
+    <div class="container mt-3 d-flex justify-content-center">    
+        <div class="card" style="width: 35rem">
+            <div class="card-body">
+                <form action="/" method="post">
+                    <label for="nota1VA" class="form-label">Nota da 1ª V.A.</label>
+                    <input type="number" step="0.1" class="form-control" name="nota1VA" id="nota1VA" min="0" max="10" required><br>
+        
+                    <label for="nota2VA" class="form-label">Nota da 2ª V.A.</label>
+                    <input type="number" step="0.1" class="form-control" name="nota2VA" id="nota2VA" min="0" max="10"><br>
+        
+                    <label for="nota3VA" class="form-label">Nota da 3ª V.A.</label>
+                    <input type="number" step="0.1" class="form-control" name="nota3VA" id="nota3VA" min="0" max="10"><br>
+        
+                    <button type="submit" class="btn btn-success">Calcular notas</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Resultados-->
+    <div class="container mt-3 d-flex justify-content-center">
+        <div class="card" style="width: 35rem">
+            <div class="card-body">
+                <h4>Resultados</h4>
+                <h5 th:text="${resultado}"></h5>
+            </div>
+        </div>
+    </div>
+
+    <!--Como os cálculos são realizados-->
+    <div class="container mt-3 d-flex justify-content-center">
+        <div class="card" style="width: 35rem">
+            <div class="card-body">
+                <h4>Cálculos</h4>
+                <p><strong>Média:</strong> a média de notas da Universidade Federal do 
+                Agreste de Pernambuco é 7, logo a soma da primeira e segunda VAs devem ser
+                maiores ou iguais a 14, para que sua média seja 7.</p>
+
+                <p><strong>3ª V.A.:</strong> a terceira VA funciona como uma "recuperação", ela
+                pode substituir a sua menor nota dentre as outras duas VAs.</p>
+
+                <p><strong>Final:</strong> caso sua média não ultrapasse 7, você precisará fazer
+                a prova final. A média da prova final é 5, porém o cálculo da final
+                é diferente: sua média atual somada com a nota da final deve ser maior ou
+                igual a 10, que dividido por 2, resulta em 5.</p>
+
+                <p>Por exemplo, sua média é 6.5, logo sua nota da final deverá 3.5, para que a média
+                resulte em 5.</p>
+
+                <p>Lembrando que: <strong>para realizar a final sua média deve ser, no mínimo, 3, 
+                e você deve ter realizado, pelo menos, duas VAs</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="my-3">
+        <span class="fst-italic d-flex justify-content-center">Feito por: Arthur de Sá Tenório</span>
+        <span class="fst-italic d-flex justify-content-center">Calculadora de notas — 2024</span>
+        <span class="fst-italic d-flex justify-content-center">Versão atual: 1.0</span>
+    </footer>
+
+</body>
+</html>
