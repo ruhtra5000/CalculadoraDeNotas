@@ -2,20 +2,24 @@ package br.com.calculadoranota.calculadoranota.facade;
 
 import org.springframework.stereotype.Service;
 
+import br.com.calculadoranota.calculadoranota.exception.ModoInvalidoException;
+
 @Service
 public class FacadeGeneral {
 
-    public String calculateNota(String nota1, String nota2, String nota3){
-        if(nota2.equals("") && nota3.equals("")){
+    public String calculateNota(String nota1, String nota2, String nota3, String modo) throws ModoInvalidoException {
+        if(modo.equals("2va")){
             return calculateNotaSegundaVA(Double.parseDouble(nota1));
         }
-        else if(nota3.equals("")){
+        else if(modo.equals("3va")){
             return calculateNotaTerceiraVA(Double.parseDouble(nota1), Double.parseDouble(nota2));
         }
-        else {
+        else if (modo.equals("final")){
             return calculateNotaFinal(Double.parseDouble(nota1), Double.parseDouble(nota2), 
             Double.parseDouble(nota3));
         }
+
+        throw new ModoInvalidoException();
     }
     
     private String calculateNotaSegundaVA(double nota1){

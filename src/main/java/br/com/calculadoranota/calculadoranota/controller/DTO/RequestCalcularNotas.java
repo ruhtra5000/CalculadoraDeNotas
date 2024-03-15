@@ -11,6 +11,7 @@ public class RequestCalcularNotas {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nota3VA = "";
     
+    private String modo;
 
     public String getNota1VA() {
         return this.nota1VA;
@@ -29,9 +30,15 @@ public class RequestCalcularNotas {
     public String getNota3VA() {
         return this.nota3VA;
     }
-
     public void setNota3VA(String nota3VA) {
         this.nota3VA = nota3VA;
+    }
+
+    public String getModo() {
+        return this.modo;
+    }
+    public void setModo(String modo) {
+        this.modo = modo;
     }
 
 }

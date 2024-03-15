@@ -5,44 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href='https://fonts.google.com/share?selection.family=Montserrat:ital,wght@0,100..900;1,100..900' rel='stylesheet'>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
 
     <title>Calculadora de notas - UFAPE</title>
+
+    <style>
+        .card {
+            box-shadow: 3px 3px 5px rgb(192, 192, 192);
+        }
+    </style>
 </head>
 <body>
-
-    <div class="navbar d-flex justify-content-center" style="background-color: #026302;">
-        <h1 class="h1 my-2 ms-2" style="color: white; font-family:'Montserrat';">
-            Calculadora de notas</h1>
-    </div>
+    <div th:replace="~{fragmentos :: cabecalho}"></div>
 
     <!--Formulario para inserção de notas-->
     <div class="container mt-3 d-flex justify-content-center">    
         <div class="card" style="width: 35rem">
-            <div class="card-body">
+            <div class="card-body pt-4">
                 <form action="/" method="post">
-                    <label for="nota1VA" class="form-label">Nota da 1ª V.A.</label>
-                    <input type="number" step="0.1" class="form-control" name="nota1VA" id="nota1VA" min="0" max="10" required><br>
-        
-                    <label for="nota2VA" class="form-label">Nota da 2ª V.A.</label>
-                    <input type="number" step="0.1" class="form-control" name="nota2VA" id="nota2VA" min="0" max="10"><br>
-        
-                    <label for="nota3VA" class="form-label">Nota da 3ª V.A.</label>
-                    <input type="number" step="0.1" class="form-control" name="nota3VA" id="nota3VA" min="0" max="10"><br>
-        
-                    <button type="submit" class="btn btn-success">Calcular notas</button>
+                    <div class="btn-group mb-3 d-flex" role="group">
+                        <input type="radio" class="btn-check" name="modo" id="nota1" autocomplete="off" value="2va" checked>
+                        <label class="btn btn-outline-success w-100" for="nota1">2ª V.A.</label>
+                      
+                        <input type="radio" class="btn-check" name="modo" id="nota2" autocomplete="off" value="3va">
+                        <label class="btn btn-outline-success w-100" for="nota2">3ª V.A.</label>
+                      
+                        <input type="radio" class="btn-check" name="modo" id="nota3" autocomplete="off" value="final">
+                        <label class="btn btn-outline-success w-100" for="nota3">Final</label>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <label for="nota1VA" class="input-group-text">Nota da 1ª V.A.:</label>
+                        <input type="number" step="0.1" class="form-control" name="nota1VA" id="nota1VA" min="0" max="10" required>
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <label for="nota2VA" class="input-group-text">Nota da 2ª V.A.:</label>
+                        <input type="number" step="0.1" class="form-control" name="nota2VA" id="nota2VA" min="0" max="10" disabled>
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <label for="nota3VA" class="input-group-text">Nota da 3ª V.A.:</label>
+                        <input type="number" step="0.1" class="form-control" name="nota3VA" id="nota3VA" min="0" max="10" disabled>
+                    </div>
+                    
+                    <div class="d-grid text-center">
+                        <button type="submit" class="btn btn-success">Calcular nota</button>
+                        <p class="mt-3">Com dúvidas? Clique <a href="/ajuda">aqui</a></p>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
     <!--Resultados-->
-    <div class="container mt-3 d-flex justify-content-center">
+    <div class="container mt-3 d-flex justify-content-center" th:if="${resultado != null}">
         <div class="card" style="width: 35rem">
             <div class="card-body">
-                <h4>Resultados</h4>
-                <h5 th:text="${resultado}"></h5>
+                <h4 class="card-title">Resultados</h4>
+                <h5 class="card-text" th:text="${resultado}"></h5>
             </div>
         </div>
     </div>
@@ -51,33 +75,61 @@
     <div class="container mt-3 d-flex justify-content-center">
         <div class="card" style="width: 35rem">
             <div class="card-body">
-                <h4>Cálculos</h4>
-                <p><strong>Média:</strong> a média de notas da Universidade Federal do 
-                Agreste de Pernambuco é 7, logo a soma da primeira e segunda VAs devem ser
-                maiores ou iguais a 14, para que sua média seja 7.</p>
+                <h4 class="card-title">Como os cálculos são feitos?</h4>
+                <p class="card-text"><strong>Média:</strong> a média de notas da Universidade Federal do 
+                Agreste de Pernambuco é 7, logo a soma da primeira e segunda VAs deve ser
+                maior ou igual a 14, para que sua média seja 7.</p>
 
-                <p><strong>3ª V.A.:</strong> a terceira VA funciona como uma "recuperação", ela
+                <p class="card-text"><strong>3ª V.A.:</strong> a terceira VA funciona como uma "recuperação", ela
                 pode substituir a sua menor nota dentre as outras duas VAs.</p>
 
-                <p><strong>Final:</strong> caso sua média não ultrapasse 7, você precisará fazer
+                <p class="card-text"><strong>Final:</strong> caso sua média não ultrapasse 7, você precisará fazer
                 a prova final. A média da prova final é 5, porém o cálculo da final
                 é diferente: sua média atual somada com a nota da final deve ser maior ou
                 igual a 10, que dividido por 2, resulta em 5.</p>
 
-                <p>Por exemplo, sua média é 6.5, logo sua nota da final deverá 3.5, para que a média
+                <p class="card-text">Por exemplo, sua média é 6.5, logo sua nota da final deverá 3.5, para que a média
                 resulte em 5.</p>
 
-                <p>Lembrando que: <strong>para realizar a final sua média deve ser, no mínimo, 3, 
+                <p class="card-text">Lembrando que: <strong>para realizar a final sua média deve ser, no mínimo, 3, 
                 e você deve ter realizado, pelo menos, duas VAs</strong></p>
             </div>
         </div>
     </div>
 
-    <footer class="my-3">
-        <span class="fst-italic d-flex justify-content-center">Feito por: Arthur de Sá Tenório</span>
-        <span class="fst-italic d-flex justify-content-center">Calculadora de notas — 2024</span>
-        <span class="fst-italic d-flex justify-content-center">Versão atual: 1.0</span>
-    </footer>
-
+    <div th:replace="~{fragmentos :: rodape}"></div>
 </body>
+
+<script>
+    const va2 = document.querySelector("#nota2VA");
+    const va3 = document.querySelector("#nota3VA");
+
+    document.querySelector("#nota1").addEventListener("click", () => {
+        va2.value = null;
+        va2.disabled = true;
+        va2.required = false;
+
+        va3.value = null;
+        va3.disabled = true;
+        va3.required = false;
+    })
+
+    document.querySelector("#nota2").addEventListener("click", () => {
+        va2.disabled = false;
+        va2.required = true;
+        
+        va3.value = null;
+        va3.disabled = true;
+        va3.required = false;
+    })
+
+    document.querySelector("#nota3").addEventListener("click", () => {
+        va2.disabled = false;
+        va2.required = true;
+        
+        va3.disabled = false;
+        va3.required = true;
+    })
+</script>
+
 </html>
