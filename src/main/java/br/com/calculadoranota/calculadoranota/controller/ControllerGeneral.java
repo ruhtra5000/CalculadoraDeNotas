@@ -1,6 +1,7 @@
 package br.com.calculadoranota.calculadoranota.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,7 @@ import br.com.calculadoranota.calculadoranota.controller.DTO.RequestCalcularNota
 import br.com.calculadoranota.calculadoranota.facade.FacadeGeneral;
 
 @Controller
-public class ControllerGeneral {
+public class ControllerGeneral implements ErrorController {
     @Autowired
     private FacadeGeneral facadeGeneral;
     
@@ -40,5 +41,10 @@ public class ControllerGeneral {
         return mv;
     }
     
-
+    @GetMapping("/error")
+    public ModelAndView error() {
+        ModelAndView mv = new ModelAndView("erro");
+        mv.addObject("erro", "Página não encontrada ou problemas internos no site!");
+        return mv;
+    }
 }
